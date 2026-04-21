@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tweeter | Sign up</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <button class="createPost">Create post</button>
+        <h1 class="title">Tweeter</h1>
+        <div class="registerComponents">
+            <button class="loginBtn"style="margin: none;">Login</button>
+            <button class="signUpBtn">Sign up</button>
+        </div>
+    </div>
+
+    <form action="/signup" method="POST">
+        <label for="fname">Email:</label><br>
+        <input type="text" id="formComp" name="email"><br>
+        <label for="lname">Username:</label><br>
+        <input type="text" id="formComp" name="username"><br>
+        <label for="lname">Password:</label><br>
+        <input type="text" id="formComp" name="password"><br>
+        <button type="submit">Submit</button>
+    </form>
+    
+
+    <script src="index.js"></script>
+</body>
+</html>
