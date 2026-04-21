@@ -8,16 +8,95 @@
 </head>
 <body>
     <div class="header">
-        <button class="createPost">Create post</button>
+        <button onclick="window.location.href='main.html'">Home</button>
         <h1 class="title">Tweeter</h1>
-        <div class="registerComponents">
-            <button class="loginBtn"style="margin: none;">Login</button>
-            <button class="signUpBtn">Sign up</button>
+        <div class="registerComponents" id="authButtons"></div>
+    </div>
+
+    <div class="form-page">
+        <div class="form-card">
+            <h2>New post</h2>
+            <p class="form-subtitle">What's on your mind?</p>
+
+            <div id="errorMsg" class="form-error" style="display:none"></div>
+
+            <form id="postForm">
+                <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea id="content" name="content" placeholder="Share something..." maxlength="280" required oninput="updateCharCount(this)"></textarea>
+                    <span class="char-count" id="charCount">0 / 280</span>
+                </div>
+                <button type="submit" class="form-submit-btn" id="submitBtn">Post</button>
+            </form>
+
+            <p class="form-footer">
+                <span class="link" onclick="window.location.href='main.html'">&larr; Back to feed</span>
+            </p>
         </div>
     </div>
-    <button></button>
-    
 
-    <script src="index.js"></script>
+    <script>
+        function updateCharCount(textarea) {
+            const count = textarea.value.length;
+            const el = document.getElementById("charCount");
+            el.textContent = count + " / 280";
+            el.classList.toggle("over-limit", count >= 260);
+        }
+
+        // Check auth on load — redirect to login if not signed in
+        fetch("/api/me").then(res => {
+            if (!res.ok) {
+                window.location.href = "login.html";
+                return;
+            }
+            return res.json();
+        }).then(data => {
+            if (!data) return;
+            const authEl = document.getElementById("authButtons");
+            authEl.innerHTML = `
+                <span class="nav-username">@${data.username}</span>
+                <button id="logoutBtn">Log out</button>
+            `;
+            document.getElementById("logoutBtn").addEventListener("click", logout);
+        });
+
+        async function logout() {
+            await fetch("/logout", { method: "POST" });
+            window.location.href = "main.html";
+        }
+
+        document.getElementById("postForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById("submitBtn");
+            const errorEl = document.getElementById("errorMsg");
+            errorEl.style.display = "none";
+            btn.disabled = true;
+            btn.textContent = "Posting...";
+
+            const content = document.getElementById("content").value;
+
+            try {
+                const res = await fetch("/api/posts", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ content }),
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    errorEl.textContent = data.error || "Could not post";
+                    errorEl.style.display = "block";
+                    btn.disabled = false;
+                    btn.textContent = "Post";
+                    return;
+                }
+                window.location.href = "main.html";
+            } catch {
+                errorEl.textContent = "Network error — please try again";
+                errorEl.style.display = "block";
+                btn.disabled = false;
+                btn.textContent = "Post";
+            }
+        });
+    </script>
 </body>
 </html>

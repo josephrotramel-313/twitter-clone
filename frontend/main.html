@@ -10,29 +10,23 @@
     <div class="header">
         <button class="createPost">Create post</button>
         <h1 class="title">Tweeter</h1>
-        <div class="registerComponents">
-            <button class="loginBtn"style="margin: none;">Login</button>
-            <button class="signUpBtn">Sign up</button>
+        <div class="registerComponents" id="authButtons">
+            <!-- filled by JS based on login state -->
         </div>
     </div>
 
     <div class="content">
         <section class="section1"></section>
+
         <section class="feed">
-            <h2 style="color: white; margin-top: 25px;font-size: 3em;text-align: center;">Posts</h2>
-            <div id="post"class="post1">
-
-            </div>
-            <div id="post"class="post2">
-
-            </div>
-            <div id="post"class="post3">
-
+            <h2 class="feed-title">Posts</h2>
+            <div id="feedContent">
+                <p class="loading-msg">Loading posts...</p>
             </div>
         </section>
+
         <section class="section3"></section>
     </div>
-    
 
     <script src="index.js"></script>
 </body>

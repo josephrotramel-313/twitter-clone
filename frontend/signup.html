@@ -8,25 +8,80 @@
 </head>
 <body>
     <div class="header">
-        <button class="createPost">Create post</button>
+        <button onclick="window.location.href='main.html'">Home</button>
         <h1 class="title">Tweeter</h1>
         <div class="registerComponents">
-            <button class="loginBtn"style="margin: none;">Login</button>
-            <button class="signUpBtn">Sign up</button>
+            <button onclick="window.location.href='login.html'">Login</button>
+            <button onclick="window.location.href='signup.html'">Sign up</button>
         </div>
     </div>
 
-    <form action="/signup" method="POST">
-        <label for="fname">Email:</label><br>
-        <input type="text" id="formComp" name="email"><br>
-        <label for="lname">Username:</label><br>
-        <input type="text" id="formComp" name="username"><br>
-        <label for="lname">Password:</label><br>
-        <input type="text" id="formComp" name="password"><br>
-        <button type="submit">Submit</button>
-    </form>
-    
+    <div class="form-page">
+        <div class="form-card">
+            <h2>Create an account</h2>
+            <p class="form-subtitle">Join Tweeter today</p>
 
-    <script src="index.js"></script>
+            <div id="errorMsg" class="form-error" style="display:none"></div>
+
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="@yourhandle" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="At least 8 characters" required autocomplete="new-password">
+                </div>
+                <button type="submit" class="form-submit-btn" id="submitBtn">Create account</button>
+            </form>
+
+            <p class="form-footer">
+                Already have an account? <span class="link" onclick="window.location.href='login.html'">Log in</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById("submitBtn");
+            const errorEl = document.getElementById("errorMsg");
+            errorEl.style.display = "none";
+            btn.disabled = true;
+            btn.textContent = "Creating account...";
+
+            const body = {
+                username: document.getElementById("username").value.trim(),
+                email: document.getElementById("email").value.trim(),
+                password: document.getElementById("password").value,
+            };
+
+            try {
+                const res = await fetch("/signup", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body),
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    errorEl.textContent = data.error || "Sign up failed";
+                    errorEl.style.display = "block";
+                    btn.disabled = false;
+                    btn.textContent = "Create account";
+                    return;
+                }
+                window.location.href = "main.html";
+            } catch {
+                errorEl.textContent = "Network error — please try again";
+                errorEl.style.display = "block";
+                btn.disabled = false;
+                btn.textContent = "Create account";
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,60 +1,338 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-image: linear-gradient(to left, rgb(28, 191, 255), rgb(122, 220, 255));
+    background-image: linear-gradient(135deg, rgb(28, 191, 255), rgb(122, 220, 255));
+    min-height: 100vh;
     color: white;
-    margin: none;
-    padding: none;
-}
-
-.content{
-    justify-content: space-evenly;
-    display: flex;
-}
-
-button {
-    padding: 15px 30px;
-    background-color: white;
-    border-radius: 25px;
-    max-height: 50px;
-    border: none;
-    cursor: pointer;
-    margin: 10px;
-    transition: all 0.2s;
-}
-button:hover {
-    transform: scale(1.1);
-}
-
-#post{
-    height: 20vh;
-    width: 33vw;
-    background-color: white;
-    border-radius: 25px;
-    margin: 15px;
-
-}
-
-.title {
-    padding: 25px;
     margin: 0;
-    text-align: center;
-    color: white;
-    font-size: 5em;
+    padding: 0;
 }
 
-.header{
+/* ── Header ── */
+.header {
     background-image: linear-gradient(to left, rgb(13, 185, 253), rgb(101, 214, 255));
-    margin: -8px;
-    padding: none;
-    border-radius: 25px;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
 }
 
-.section1, .section3 {
-    height: 100vh;
-    width: 33vw;
-    margin: -8px;
-    margin-top: 25px;
+.title {
+    margin: 0;
+    padding: 18px 0;
+    text-align: center;
+    color: white;
+    font-size: 2.4em;
+    letter-spacing: -0.5px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.registerComponents {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ── Buttons ── */
+button {
+    padding: 10px 22px;
+    background-color: white;
+    color: rgb(13, 185, 253);
+    font-weight: 600;
+    font-size: 0.9em;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+button:hover {
+    background-color: rgb(230, 250, 255);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ── Main feed layout ── */
+.content {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 24px 0;
+}
+
+.section1,
+.section3 {
+    width: 25vw;
+}
+
+/* ── Feed ── */
+.feed {
+    width: 44vw;
+    min-width: 320px;
+}
+
+.feed-title {
+    color: white;
+    margin: 0 0 20px 0;
+    font-size: 1.6em;
+    font-weight: 700;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.35);
+}
+
+/* ── Post cards ── */
+.post-card {
+    background-color: white;
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    color: #1a1a2e;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s, transform 0.15s;
+}
+
+.post-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.post-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgb(28, 191, 255), rgb(101, 214, 255));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1em;
+    flex-shrink: 0;
+}
+
+.post-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-username {
+    font-weight: 700;
+    font-size: 0.95em;
+    color: #0d1117;
+}
+
+.post-time {
+    font-size: 0.8em;
+    color: #6b7280;
+}
+
+.post-body {
+    font-size: 0.97em;
+    line-height: 1.55;
+    color: #374151;
+    margin-bottom: 14px;
+}
+
+.post-actions {
+    display: flex;
+    gap: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.post-action-btn {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 4px 0;
+    font-size: 0.85em;
+    color: #6b7280;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.post-action-btn:hover {
+    color: rgb(13, 185, 253);
+    background: none;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ── Form pages (login, signup, createpost) ── */
+.form-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 48px 16px;
+}
+
+.form-card {
+    background: white;
+    border-radius: 20px;
+    padding: 36px 40px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    color: #1a1a2e;
+}
+
+.form-card h2 {
+    margin: 0 0 6px 0;
+    font-size: 1.6em;
+    color: #0d1117;
+}
+
+.form-card .form-subtitle {
+    font-size: 0.9em;
+    color: #6b7280;
+    margin-bottom: 28px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 12px 14px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.95em;
+    font-family: inherit;
+    color: #1a1a2e;
+    background: #f9fafb;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: rgb(13, 185, 253);
+    box-shadow: 0 0 0 3px rgba(13, 185, 253, 0.15);
+    background: white;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.char-count {
+    font-size: 0.78em;
+    color: #9ca3af;
+    text-align: right;
+    margin-top: 4px;
+}
+
+.char-count.over-limit {
+    color: #ef4444;
+}
+
+.form-submit-btn {
+    width: 100%;
+    padding: 13px;
+    background: linear-gradient(135deg, rgb(13, 185, 253), rgb(28, 191, 255));
+    color: white;
+    font-size: 1em;
+    font-weight: 700;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    margin: 8px 0 0 0;
+    transition: opacity 0.2s, transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 3px 10px rgba(13, 185, 253, 0.4);
+}
+
+.form-submit-btn:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(13, 185, 253, 0.45);
+    background: linear-gradient(135deg, rgb(13, 185, 253), rgb(28, 191, 255));
+    color: white;
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.88em;
+    color: #6b7280;
+}
+
+.form-footer a,
+.form-footer span.link {
+    color: rgb(13, 185, 253);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.form-footer a:hover,
+.form-footer span.link:hover {
+    text-decoration: underline;
+}
+
+/* ── Error message in forms ── */
+.form-error {
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.88em;
+    margin-bottom: 16px;
+}
+
+/* ── Nav username (shown when logged in) ── */
+.nav-username {
+    color: white;
+    font-weight: 600;
+    font-size: 0.9em;
+    padding: 10px 4px;
+}
+
+/* ── Like button active state ── */
+.like-btn.liked {
+    color: rgb(13, 185, 253);
+}
+
+/* ── Empty / loading feed message ── */
+.loading-msg {
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 40px 0;
+    font-size: 1em;
 }
